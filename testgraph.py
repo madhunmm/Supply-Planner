@@ -1,20 +1,17 @@
 import networkx as nx
-import matplotlib.pyplot as plt
-from networkx.algorithms.cycles import find_cycle
-from networkx.generators.classic import null_graph
-from numpy import empty
 
-def find_qty(G,node_name, sum, need):
-    node = G.nodes(name=node_name)
-    print(node)
-    sum = sum + node["qty"]
+def find_qty(G,node_name, sum, need, path, all_paths):
+    node = [n for n,d in G.nodes(data=True) if(d["name"]==node_name)]
+    sum = sum + G.nodes(data=True)[node[0]]["qty"]
+    path = path + node
     if(sum >= need):
-        return node
+        all_paths.append([path,sum])
+        return
     else:
-        neighbours = [n for n in G.neighbours(node)]
+        neighbours = [n for n in G.neighbors(node[0])]
         for n in neighbours:
-            return node + find_qty(G,n["name"],sum,need)
-
+            find_qty(G,n,sum,need,path,all_paths)
+    return all_paths
 
 G = nx.DiGraph()
 G.add_node("A", name="A")
@@ -34,15 +31,11 @@ G.nodes["B"]["qty"]=5
 G.nodes["C"]["qty"]=4
 G.nodes["D"]["qty"]=3
 
-G.neighbors("A")
 # Find the path which will give me full qty
-need = 8
+need = 30
 sum=0
-find_qty(G,G.nodes["A"]["name"],sum,need)
-
-ud=nx.to_undirected(G)
-nx.draw_networkx(ud)
-plt.show()
-
+all_paths = []
+find_qty(G,G.nodes["A"]["name"],sum,need, [],all_paths)
+print(all_paths)
 
      
