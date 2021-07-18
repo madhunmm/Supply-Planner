@@ -1,0 +1,37 @@
+{
+    "item": "A",
+    "quantity": 100,
+    "subparts":[
+        {
+            "item": "B",
+            "quantity": 10,
+            "subparts":[]
+        },
+        {
+            "item": "C",
+            "quantity": 20,
+            "subparts":[]
+        },
+        {
+            "item": "D",
+            "quantity": 30,
+            "subparts":[
+                {
+                    "item": "F",
+                    "quantity": 10,
+                    "subparts":[]
+                },
+                {
+                    "item": "G",
+                    "quantity": 90,
+                    "subparts":[]
+                }
+            ]
+        },
+        {
+            "item": "E",
+            "quantity": 40,
+            "subparts":[]
+        }
+    ]
+}
